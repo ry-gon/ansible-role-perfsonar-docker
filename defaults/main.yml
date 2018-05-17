@@ -1,2 +1,4 @@
 ---
-# defaults file for perfsonar-tools.docker
+# defaults file for perfsonar-docker
+
+perfsonar_docker_bundle: "perfsonar/tools"

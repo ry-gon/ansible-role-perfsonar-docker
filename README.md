@@ -24,16 +24,22 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: rygon.perfsonar-tools, x: 42 }
+- hosts: testpoints
+  roles:
+     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: testpoint }
+
+- hosts: toolkits
+  vars_files:
+    - vars/perfsonar_vars.yml
+  roles:
+     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: tools }
 
 License
 -------
 
-BSD
+Apache 2.0
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Written by Ryan Goniwiecha http://github.com/ry-gon
