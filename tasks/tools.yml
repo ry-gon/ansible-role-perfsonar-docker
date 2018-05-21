@@ -1,0 +1,15 @@
+---
+# installer for toolkit
+
+- name: pull the toolkit container image
+  docker_image:
+    name: perfsonar/tools
+
+- name: create the toolkit container
+  docker_container:
+    name: perfsonar_tools
+    image: perfsonar/tools
+    detach: yes
+    published_ports: all
+    volumes:
+      - /var/run

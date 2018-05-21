@@ -1,24 +1,16 @@
 ---
 # tasks file for perfsonar-docker
 
-#- name: Print var
-#debug: "msg=Mosh Version: '{{ perfsonar_docker_bundle }}'"
-
 - name: check to see if we support the requested package
   fail:
     msg: "Unsupported package requested"
   when: perfsonar_docker_bundle != "tools" and
         perfsonar_docker_bundle != "testpoint"
 
-- name: pull the desired container image
-  docker_image:
-    name: perfsonar/{{ perfsonar_docker_bundle }}
+- name: Toolkit Install
+  import_tasks: tools.yml
+  when: perfsonar_docker_bundle == "tools"
 
-- name: create the container
-  docker_container:
-    name: perfsonar_{{ perfsonar_docker_bundle }}
-    image: perfsonar/{{ perfsonar_docker_bundle }}
-    detach: yes
-    published_ports: all
-    volumes:
-      - /var/run
+- name: Testpoint Install
+  import_tasks: testpoint.yml
+  when: perfsonar_docker_bundle == "testpoint"

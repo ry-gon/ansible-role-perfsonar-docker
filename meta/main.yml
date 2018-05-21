@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ryan Goniwiecha
-  description: perfSONAR Toolkit, designed for Docker
+  description: perfSONAR Testpoint and Toolkit, designed for Docker
   company: University of Michigan ITS
 
   license: Apache 2.0

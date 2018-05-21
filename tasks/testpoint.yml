@@ -1,0 +1,16 @@
+---
+# installer for testpoint
+
+- name: pull the testpoint container image
+  docker_image:
+      name:  perfsonar/testpoint
+
+- name: create the testpoint container
+  docker_container:
+    name: perfsonar_testpoint
+    image: perfsonar/testpoint
+    detach: yes
+    published_ports: all
+    privileged: yes
+    volumes:
+      - /var/run
