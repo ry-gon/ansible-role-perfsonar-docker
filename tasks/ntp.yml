@@ -1,0 +1,12 @@
+---
+
+- name: add ntp servers to ntp.conf
+  command: >
+    docker container exec -d perfsonar_{{ perfsonar_docker_bundle }}
+    bash -c "echo {{ item }} >> /etc/ntp.conf"
+  with_items: "{{ perfsonar_docker_ntp_servers }}"
+
+- name: sync ntp
+  command: >
+    docker container exec -d perfsonar_{{ perfsonar_docker_bundle }}
+    bash -c "ntpdate {{ perfsonar_docker_ntp_servers.0 }}"

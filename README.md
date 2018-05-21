@@ -1,7 +1,7 @@
-Role Name
+perfsonar-docker
 =========
 
-Install the perfsonar toolkit as a docker container, as sourced from https://hub.docker.com/r/perfsonar/tools/.
+Install the perfsonar toolkit or testpoint as a docker container, as sourced from https://hub.docker.com/r/perfsonar.
 
 Requirements
 ------------
@@ -29,8 +29,6 @@ Including an example of how to use your role (for instance, with variables passe
      - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: testpoint }
 
 - hosts: toolkits
-  vars_files:
-    - vars/perfsonar_vars.yml
   roles:
      - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: tools }
 
@@ -42,4 +40,5 @@ Apache 2.0
 Author Information
 ------------------
 
-Written by Ryan Goniwiecha http://github.com/ry-gon
+Written by Ryan Goniwiecha 
+http://github.com/ry-gon

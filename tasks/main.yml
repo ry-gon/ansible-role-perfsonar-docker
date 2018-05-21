@@ -7,10 +7,31 @@
   when: perfsonar_docker_bundle != "tools" and
         perfsonar_docker_bundle != "testpoint"
 
-- name: Toolkit Install
-  import_tasks: tools.yml
+- name: pull the desired container image
+  docker_image:
+      name: "perfsonar/{{ perfsonar_docker_bundle }}"
+
+- name: create the testpoint container
+  docker_container:
+    name: perfsonar_testpoint
+    image: perfsonar/testpoint
+    detach: yes
+    published_ports: all
+    privileged: yes
+    volumes:
+      - /var/run
+  when: perfsonar_docker_bundle == "testpoint"
+
+- name: create the toolkit container
+  docker_container:
+    name: perfsonar_tools
+    image: perfsonar/tools
+    detach: yes
+    published_ports: all
+    volumes:
+      - /var/run
   when: perfsonar_docker_bundle == "tools"
 
-- name: Testpoint Install
-  import_tasks: testpoint.yml
-  when: perfsonar_docker_bundle == "testpoint"
+- name: configure ntp
+  import_tasks: ntp.yml
+  when: perfsonar_docker_ntp_servers.0 != ""
