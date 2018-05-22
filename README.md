@@ -30,7 +30,7 @@ Including an example of how to use your role (for instance, with variables passe
 
 - hosts: toolkits
   roles:
-     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: tools }
+     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: tools, purge: true }
 
 License
 -------
