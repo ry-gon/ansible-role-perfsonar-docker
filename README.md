@@ -32,7 +32,7 @@ Example Playbook
     - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: tools }
 ```
 
-Full Containerized perfSONAR Installation from a fresh CentOS/EL Guide:
+Full Containerized perfSONAR through Installation Guide:
 ----------------------------------------------------
 
 First install the necessary packages:
@@ -54,16 +54,16 @@ Then, run the playbook:
 ansible-playbook pS.yml
 ```
 
-Note that the system's clock must be in sync for perfSONAR to function properly. This can be set through ntp, with a command such as:
-```
-ntpdate [ntp server]
-```
-
 The container should be up and running by default. To attach to it, run the following:
 ```
 docker exec -it perfsonar_testpoint /bin/bash
 ```
 If the tools bundle is used, it would be `perfsonar_tools` instead of `perfsonar_testpoint`.
+
+Note that the container's clock must be in sync for perfSONAR to function properly. This can be set through ntp, with a command such as:
+```
+ntpdate [ntp server]
+```
 
 From here, you can run any regular perfsonar commands, such as `pscheduler`.
 
