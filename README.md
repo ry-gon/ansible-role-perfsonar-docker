@@ -32,7 +32,7 @@ Example Playbook
     - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: tools }
 ```
 
-Full Containerized perfSONAR Installation from a fresh CentOS/EL Install Guide:
+Full Containerized perfSONAR Installation from a fresh CentOS/EL Guide:
 ----------------------------------------------------
 
 First install the necessary packages:
