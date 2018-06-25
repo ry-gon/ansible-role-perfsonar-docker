@@ -42,12 +42,16 @@ ansible-galaxy -f install mongrelion.docker
 ansible-galaxy -f install ry-gon.perfsonar-docker
 ```
 
-Then write a simple playbook to call the roles. The one shown below will provide a standard installation with the 'perfsonar-testpoint' bundle.
+Then write a simple playbook to call the roles, e.g. `touch pS.yml`. The one shown below will provide a standard installation with the 'perfsonar-testpoint' bundle.
 ```
 - hosts: testpoints
   roles:
     - { role: mongrelion.docker }
     - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: testpoint }
+```
+Then, run the playbook:
+```
+ansible-playbook pS.yml
 ```
 
 Note that the system's clock must be in sync for perfSONAR to function properly. This can be set through ntp, with a command such as:
