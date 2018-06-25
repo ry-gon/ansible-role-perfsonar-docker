@@ -32,7 +32,7 @@ Example Playbook
     - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: tools }
 ```
 
-Full Containerized perfSONAR through Installation Guide:
+Full Containerized perfSONAR Installation Guide:
 ----------------------------------------------------
 
 First install the necessary packages:
