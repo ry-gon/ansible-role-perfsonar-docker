@@ -1,10 +1,37 @@
 ---
-# Main
+# tasks file for perfsonar-docker
 
-- name: install everything
-  import_tasks: install.yml
-  when: not purge
+- name: check to see if we support the requested package
+  fail:
+    msg: "Unsupported package requested"
+  when: perfsonar_docker_bundle != "tools" and
+        perfsonar_docker_bundle != "testpoint"
 
-- name: purge everything
-  import_tasks: purge.yml
-  when: purge
+- name: pull the desired container image
+  docker_image:
+      name: "perfsonar/{{ perfsonar_docker_bundle }}"
+
+- name: create the testpoint container
+  docker_container:
+    name: perfsonar_testpoint
+    image: perfsonar/testpoint
+    detach: yes
+    published_ports: all
+    privileged: yes
+    volumes:
+      - /var/run
+  when: perfsonar_docker_bundle == "testpoint"
+
+- name: create the toolkit container
+  docker_container:
+    name: perfsonar_tools
+    image: perfsonar/tools
+    detach: yes
+    published_ports: all
+    volumes:
+      - /var/run
+  when: perfsonar_docker_bundle == "tools"
+
+- name: configure ntp
+  import_tasks: ntp.yml
+  when: perfsonar_docker_ntp_servers.0 != ""

@@ -8,6 +8,4 @@ perfsonar_docker_ntp_servers:
     - ""
 #   - server 1
 #   - server 2
-#   etc
-
-purge: false
+#   - etc.

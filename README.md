@@ -3,15 +3,15 @@ perfsonar-docker
 
 Install the perfsonar toolkit or testpoint as a docker container, as sourced from https://hub.docker.com/r/perfsonar.
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Default role variables are found in `defaults/main.yml`.
+
+| Name       | Default Value | Description |
+| ---------- | ------------- | ----------- |
+| `perfsonar_docker_bundle` | "" | Choice of `testpoint` or `tools`. This is required. |
+| `perfsonar_docker_ntp_servers` | "" | List of ntp servers to add to the container's /etc/ntp.conf |
 
 Dependencies
 ------------
@@ -22,15 +22,59 @@ https://galaxy.ansible.com/mongrelion/docker/ can be quite useful for its instal
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
+```
 - hosts: testpoints
   roles:
-     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: testpoint }
+    - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: testpoint }
 
 - hosts: toolkits
   roles:
-     - { role: ry-gon.perfsonar-docker, perfsonar-docker-bundle: tools, purge: true }
+    - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: tools }
+```
+
+Full Containerized perfSONAR Installation from a fresh CentOS/EL Install Guide:
+----------------------------------------------------
+
+First install the necessary packages:
+```
+yum -y install ansible
+ansible-galaxy -f install mongrelion.docker
+ansible-galaxy -f install ry-gon.perfsonar-docker
+```
+
+Then write a simple playbook to call the roles. The one shown below will provide a standard installation with the 'perfsonar-testpoint' bundle.
+```
+- hosts: testpoints
+  roles:
+    - { role: mongrelion.docker }
+    - { role: ry-gon.perfsonar-docker, perfsonar_docker_bundle: testpoint }
+```
+
+Note that the system's clock must be in sync for perfSONAR to function properly. This can be set through ntp, with a command such as:
+```
+ntpdate [ntp server]
+```
+
+The container should be up and running by default. To attach to it, run the following:
+```
+docker exec -it perfsonar_testpoint /bin/bash
+```
+If the tools bundle is used, it would be `perfsonar_tools` instead of `perfsonar_testpoint`.
+
+From here, you can run any regular perfsonar commands, such as `pscheduler`.
+
+To stop or start the container, run:
+```
+docker container stop perfsonar_testpoint
+```
+or
+```
+docker container start perfsonar_testpoint
+```
+and to list all containers (started or stopped), run:
+```
+docker container ls -a
+```
 
 License
 -------
@@ -41,4 +85,4 @@ Author Information
 ------------------
 
 Written by Ryan Goniwiecha 
-http://github.com/ry-gon
+http://gitlab.com/ry-gon
